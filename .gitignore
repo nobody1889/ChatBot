@@ -6,3 +6,7 @@ env
 .venv
 venv
 
+# chache
+
+__pychack__/
+*.pyc
