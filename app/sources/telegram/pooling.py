@@ -1,9 +1,21 @@
 from .bot_client import BotClient
-from handlers import handle_updates
+from .handlers.handle_updates import dispatcher
+from app.core import logging
+
+logger = logging.getLogger(__name__)
 
 bot = BotClient()
 
 async def pooling():
-    offeset = 0
-    updates, offeset = await bot.getUpdates(offset=offeset)
-    await handle_updates(bot, updates)
+    logger.info("start pooling")
+    offset = 0
+
+    while True:
+        updates = await bot.getUpdates(offset=offset)
+
+        results = updates.get("result", [])
+        print("updates:", results)
+
+        for update in results:
+            offset = update["update_id"] + 1
+            await dispatcher(bot, update)
