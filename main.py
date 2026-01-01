@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from app.sources.telegram import pooling 
+from app.services.telegram import pooling 
 import asyncio
 
 @asynccontextmanager
