@@ -6,6 +6,8 @@ load_dotenv()
 
 class Settings(BaseSettings):
     bot_token: str
+    ollama_url: str
+    ollama_model: str
     
     class Config:
         env_file = ".env"
