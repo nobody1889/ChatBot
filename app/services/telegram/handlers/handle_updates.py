@@ -1,4 +1,5 @@
 from .handle_commands import command_handler
+from app.services.assistant.handlers.text import handle_ai_message
 
 async def dispatcher(bot, update) -> None:
     if "message" not in update:
@@ -14,9 +15,6 @@ async def dispatcher(bot, update) -> None:
             await command_handler(bot, chat_id, text)
 
         else:
-            """
-                    for ai to response
-            """
-            await bot.sendMessage(chat_id, "ai response here")
+            await handle_ai_message(bot, chat_id, text)
     else:
         await bot.sendMessage(chat_id, "i just handel text message 💔💔")
