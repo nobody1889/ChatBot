@@ -1,2 +1,2 @@
 # ChatBot
-a telegram bot powerd with ai (ollama)
+A Telegram bot powered by AI (Ollama) for intelligent conversations.
