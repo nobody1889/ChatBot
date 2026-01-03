@@ -14,7 +14,6 @@ async def pooling():
         updates = await bot.getUpdates(offset=offset)
 
         results = updates.get("result", [])
-        print("updates:", results)
 
         for update in results:
             offset = update["update_id"] + 1

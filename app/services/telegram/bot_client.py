@@ -24,8 +24,6 @@ class BotClient:
         return r.json()
 
     async def getUpdates(self, offset: int = 0, timeout: int = 10) -> dict:
-        print("get updates")
-
         r = await self.client.get(
             "/getUpdates",
             params={
