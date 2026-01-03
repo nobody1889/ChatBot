@@ -8,9 +8,9 @@ A Telegram bot powered by AI (Ollama) for intelligent conversations.
 docker compose up -d --build
 
 # 2. Pull your model (do this only once)
-docker exec -it chatbot-ollama ollama pull gemma3:9b
-#    or smaller/faster variant:
-# docker exec -it chatbot-ollama ollama pull gemma3:4b-it-q4_K_M
+docker exec -it ollama ollama pull gemma3
+# Optional smaller/faster variant:
+# docker exec -it ollama ollama pull gemma3:4b-it-q4_K_M
 
 # 3. Test the API
 curl -X POST http://localhost:8000/chat \
