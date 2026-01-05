@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 bot = BotClient()
 
-async def pooling():
+async def polling():
     logger.info("start pooling")
     offset = 0
 

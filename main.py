@@ -1,16 +1,19 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from app.services.telegram import pooling 
+from app.services.telegram import polling
+from app.db import init_db
 import asyncio
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    task = None
     try:
-        task = asyncio.create_task(pooling())
+        await init_db() # init database
+        task = asyncio.create_task(polling())   # strat the telegram pooling
         yield
 
     finally:
-        task.cancel()
+        await task.cancel()
 
 app = FastAPI(lifespan=lifespan)
 

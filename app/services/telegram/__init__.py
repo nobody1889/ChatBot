@@ -1,1 +1,1 @@
-from .pooling import pooling
+from .pooling import polling
