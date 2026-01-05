@@ -30,7 +30,8 @@ services:
     env_file:
       - .env
     volumes:
-      - ollama_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
   
 volumes:
   ollama_data:
+  postgres_data:
