@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from app.services.telegram import polling
 from app.db import init_db
+from app.api import router
 import asyncio
 
 @asynccontextmanager
@@ -25,6 +26,8 @@ async def root():
             "bot": "https://t.me/my_chatbot_ai_botss"
             }
         }
+
+app.include_router(router)
 
 if __name__ == "__main__":
     import uvicorn
