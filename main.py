@@ -30,6 +30,12 @@ async def lifespan(app: FastAPI):
         except UnboundLocalError:
             logger.error("task not found")
 
+        except asyncio.CancelledError:
+            pass
+          
+        except UnboundLocalError:
+            logger.error("task not found")
+            
         except Exception as e:
             logger.error(f"Error during shutdown: {e}", exc_info=True)
             
