@@ -1,7 +1,3 @@
-from .user_service import UserService
-from .user_repository import UserRepository
+from .deps import get_user_service, UserService
 
-__all__ = [
-    "UserService",
-    "UserRepository"
-]
+__all__ = ["get_user_service", "UserService"]
