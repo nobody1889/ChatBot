@@ -1,8 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from app.schemas.user import UserCreate, UserRead
-from app.services.accounts import UserService, UserRepository
-from sqlalchemy.ext.asyncio import AsyncSession
-from app.db import get_db
+from app.services.accounts import   UserService, get_user_service
 from app.core.logging import logging
 
 logger = logging.getLogger(__name__)
@@ -11,10 +9,6 @@ router = APIRouter(
     prefix="/accounts/user",
     tags=["User"],
 )
-
-def get_user_service(db : AsyncSession = Depends(get_db)) -> UserService:
-    repo = UserRepository(db)
-    return UserService(repo)
 
 @router.post("/", response_model=UserCreate)
 async def create_or_update_user(user: UserCreate, user_service: UserService = Depends(get_user_service)):
