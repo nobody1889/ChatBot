@@ -16,6 +16,9 @@ class UserService:
 
     async def update_or_create(self, user: UserCreate) -> User:
         return await self.user_repository.update_or_create(user)
+    
+    async def get_or_create_user(self, user: UserCreate) -> User:
+        return await self.user_repository.get_or_create(user)
 
     async def update_user(self, db_user: User, data: UserUpdate) -> User:
         if hasattr(data, "is_blocked") and data.is_blocked != db_user.is_blocked:
@@ -28,10 +31,16 @@ class UserService:
     async def unblock_user(self, user_id: str) -> bool:
         return await self.user_repository.set_block(user_id, False)
 
-    async def ensure_not_blocked(self, user_id: str) -> User:
+    async def check_user_permitions(self, user_id: str) -> User:
         user = await self.user_repository.get_by_user_id(user_id)
+
         if not user:
             raise ValueError("User not found")
+        
         if user.is_blocked:
             raise PermissionError("User is blocked")
+        
         return user
+
+    async def get_all_users(self) -> list[User]:
+        return await self.user_repository.get_all_users()
