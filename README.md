@@ -5,7 +5,7 @@ Quick to deploy with Docker and customizable with different AI models.
 ---
 
 ## Tech Stack
-- **Language:** Python
+- **Language:** Python(FatApi)
 - **Bot Implementation:** Raw Telegram API via `async` HTTP requests (`httpx`)
 - **AI Model:** Ollama (gemma3)
 - **Containerization:** Docker & Docker Compose
