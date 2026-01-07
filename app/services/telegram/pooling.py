@@ -2,8 +2,7 @@ from .bot_client import BotClient
 from .handlers.handle_updates import dispatcher
 from app.core import logging
 from app.db.session import async_sessionLocal
-from accounts.user_repository import UserRepository
-from accounts.user_service import UserService
+from app.services.accounts import UserRepository, UserService
 
 logger = logging.getLogger(__name__)
 
