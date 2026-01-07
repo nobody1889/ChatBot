@@ -4,23 +4,22 @@ from typing import Optional
 
 class UserBase(BaseModel):
     user_id: str
-    username: Optional[str] = None
     first_name: Optional[str] = None
     last_name: Optional[str] = None
-    is_blocked: Optional[bool] = False
 
 class UserCreate(UserBase):
-    pass
+    username: str
 
 class UserUpdate(BaseModel):
     username: Optional[str] = None
     first_name: Optional[str] = None
     last_name: Optional[str] = None
-    is_blocked: Optional[bool]
+    is_blocked: Optional[bool] = None
 
 class UserRead(UserBase):
     id: int
+    username: str
     created_at: datetime
+    is_blocked: bool = False
 
     model_config = ConfigDict(from_attributes=True)
-
