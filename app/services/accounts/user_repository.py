@@ -24,11 +24,17 @@ class UserRepository:
         return user_db
 
     async def update(self, user: User, data: UserUpdate) -> User:
-        update_data = data.model_dump(exclude_unset=True)
+        update_data = data.model_dump(exclude_unset=True, exclude_none=True)
         for key, value in update_data.items():
             setattr(user, key, value)
         await self.db.flush()
         return user
+    
+    async def update_or_create(self, user: UserCreate) -> User:
+        user_db = await self.get_by_user_id(user.user_id)
+        if user_db:
+            return await self.update(user_db, user)
+        return await self.create(user)
 
     async def set_block(self, user_id: str, block: bool) -> bool:
         result = await self.db.execute(
