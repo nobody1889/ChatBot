@@ -51,7 +51,7 @@ async def get_user(user_id: str, user_service: UserService = Depends(get_user_se
             detail="Error getting user"
         )
     
-@router.put("/{user_id}", response_model=UserCreate)
+@router.put("/{user_id}", response_model=UserRead)
 async def update_user(user: UserCreate, user_service: UserService = Depends(get_user_service)):
     try:
         user_obj = await user_service.update_user(user)
@@ -75,7 +75,7 @@ async def update_user(user: UserCreate, user_service: UserService = Depends(get_
             detail="Error updating user"
         )
 
-@router.patch("/{user_id}/block", response_model=UserCreate)
+@router.patch("/{user_id}/block")
 async def block_user(user_id: str, user_service: UserService = Depends(get_user_service)):
     try:
         success = await user_service.block_user(user_id)
@@ -99,7 +99,7 @@ async def block_user(user_id: str, user_service: UserService = Depends(get_user_
             detail="Error blocking user"
         )
 
-@router.patch("/{user_id}/unblock", response_model=UserCreate)
+@router.patch("/{user_id}/unblock")
 async def unblock_user(user_id: str, user_service: UserService = Depends(get_user_service)):
     try:
         success = await user_service.unblock_user(user_id)
@@ -117,4 +117,24 @@ async def unblock_user(user_id: str, user_service: UserService = Depends(get_use
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Error unblocking user"
+        )
+
+@router.get('/{user_id}/delete', response_model=UserRead)
+async def delete_user(user_id: str, user_service: UserService = Depends(get_user_service)):
+    try:
+        user_obj = await user_service.delete_user(user_id)
+
+        if not user_obj:
+            logger.info(f"User not found: {user_id}")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+        logger.info(f"User deleted: {user_id}")
+        return UserRead.model_validate(user_obj)
+    
+    except Exception as e:
+        logger.error(f"Error deleting user: {e}")
+
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Error deleting user"
         )
