@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.schemas.user import UserCreate, UserRead
+from app.schemas import UserCreate, UserRead
 from app.services.accounts import   UserService, get_user_service
-from app.core.logging import logging
+from app.core import logging
 
 logger = logging.getLogger(__name__)
 
