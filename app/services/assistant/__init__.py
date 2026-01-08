@@ -1,1 +1,5 @@
-from .handlers import handle_ai_message
+from .ai_client import AiClient
+
+__all__ = [
+    "AiClient"
+]
