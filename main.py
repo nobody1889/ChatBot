@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from app.services.telegram import polling
 from app.db import init_db
 from app.core import logging
-from app.api import router
+from app.api import all_routes
 import asyncio
 import httpx
 
@@ -51,7 +51,7 @@ async def root():
             }
         }
 
-app.include_router(router)
+app.include_router(all_routes)
 
 if __name__ == "__main__":
     import uvicorn
