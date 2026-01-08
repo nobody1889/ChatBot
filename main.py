@@ -5,6 +5,7 @@ from app.db import init_db
 from app.core import logging
 from app.api import router
 import asyncio
+import httpx
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +15,7 @@ async def lifespan(app: FastAPI):
         await init_db() # init database
         logger.info("Database initialized successfully")
 
-        task = asyncio.create_task(polling())   # strat the telegram pooling
+        task = asyncio.create_task(polling())   # strat the telegram poling
 
         yield
 
@@ -25,17 +26,16 @@ async def lifespan(app: FastAPI):
             
         except asyncio.CancelledError:
             logger.info("Task cancelled")
-            pass
 
         except UnboundLocalError:
             logger.error("task not found")
-
-        except asyncio.CancelledError:
-            pass
           
         except UnboundLocalError:
             logger.error("task not found")
-            
+        
+        except httpx.ConnectError as e:
+            logger.error(f"httpx.ConnectError: {e}")
+
         except Exception as e:
             logger.error(f"Error during shutdown: {e}", exc_info=True)
             
