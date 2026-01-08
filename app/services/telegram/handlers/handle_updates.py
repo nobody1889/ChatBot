@@ -6,10 +6,10 @@ from app.services.accounts import UserService
 async def dispatcher(bot, update, user_service: UserService):
     if "message" not in update:
         return
-
-    message = update["message"]
+    
+    message: dict = update["message"]
     chat_id = str(message["chat"]["id"])
-    text = message.get("text")
+    text: str = message.get("text")
 
     user = await user_service.get_or_create_user(
         user_id=chat_id,
