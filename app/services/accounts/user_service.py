@@ -44,3 +44,6 @@ class UserService:
 
     async def get_all_users(self) -> list[User]:
         return await self.user_repository.get_all_users()
+    
+    async def delete_user(self, user_id: str) -> bool:    
+        return await self.user_repository.delete_user(user_id)
