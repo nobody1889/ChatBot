@@ -1,5 +1,5 @@
 from .handle_commands import command_handler
-from app.services.assistant.handlers.text import handle_ai_message
+from .handle_ai import handle_ai_message
 from app.services.accounts import UserService
 
 
