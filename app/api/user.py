@@ -136,17 +136,17 @@ async def get_all_users(service: UserService = Depends(get_user_service)):
 
 
 
-@router.get('/{user_id}/delete', response_model=UserRead)
+@router.get('/{user_id}/delete')
 async def delete_user(user_id: str, user_service: UserService = Depends(get_user_service)):
     try:
-        user_obj = await user_service.delete_user(user_id)
+        response = await user_service.delete_user(user_id)
 
-        if not user_obj:
+        if not response:
             logger.info(f"User not found: {user_id}")
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
         logger.info(f"User deleted: {user_id}")
-        return UserRead.model_validate(user_obj)
+        return {"status": status.HTTP_200_OK, "message": f" user {user_id} get delete"}
     
     except Exception as e:
         logger.error(f"Error deleting user: {e}")
