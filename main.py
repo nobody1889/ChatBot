@@ -27,11 +27,8 @@ async def lifespan(app: FastAPI):
         except asyncio.CancelledError:
             logger.info("Task cancelled")
 
-        except UnboundLocalError:
-            logger.error("task not found")
-          
-        except UnboundLocalError:
-            logger.error("task not found")
+        except UnboundLocalError as e:
+            logger.error(f"task not found: {e}")
         
         except httpx.ConnectError as e:
             logger.error(f"httpx.ConnectError: {e}")
