@@ -1,9 +1,9 @@
 from ..db import Base
 from sqlalchemy import String, Boolean, Integer
-from sqlalchemy.orm import mapped_column, Mapped
+from sqlalchemy.orm import mapped_column, Mapped, relationship
 from sqlalchemy.sql import func
 from datetime import datetime
-
+from .ai import Assistant
 class User(Base):
     __tablename__ = "users"
 
@@ -16,5 +16,6 @@ class User(Base):
     last_name: Mapped[str] = mapped_column(String(255), nullable=True)
 
     is_blocked: Mapped[bool] = mapped_column(Boolean, default=False)
+    ai_Assistants: Mapped[list[Assistant]] = relationship("Assistant")
 
     created_at: Mapped[datetime] = mapped_column(default=func.now())
