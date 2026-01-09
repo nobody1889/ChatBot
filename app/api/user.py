@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.schemas import UserCreate, UserRead
+from app.schemas import UserCreate, UserRead, UserUpdate
 from app.services.accounts import   UserService, get_user_service
 from app.core import logging
 
@@ -15,7 +15,6 @@ async def create_or_update_user(user: UserCreate, user_service: UserService = De
     try:
         user_obj = await user_service.update_or_create(user)
         logger.info(f"User created or updated: {user_obj}")
-
         return UserRead.model_validate(user_obj)
     
     except Exception as e:
@@ -52,7 +51,7 @@ async def get_user(user_id: str, user_service: UserService = Depends(get_user_se
         )
     
 @router.put("/{user_id}", response_model=UserRead)
-async def update_user(user: UserCreate, user_service: UserService = Depends(get_user_service)):
+async def update_user(user: UserUpdate, user_service: UserService = Depends(get_user_service)):
     try:
         user_obj = await user_service.update_user(user)
 
@@ -118,6 +117,24 @@ async def unblock_user(user_id: str, user_service: UserService = Depends(get_use
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Error unblocking user"
         )
+
+@router.get('/all_users')
+async def get_all_users(service: UserService = Depends(get_user_service)):
+    users = await service.get_all_users()
+    
+    if not users:
+        return {
+            "status":"success",
+            "message":"no user in db"
+        }
+    
+    return {
+        "status":"success",
+        "message":"all users in response",
+        "response": users
+    }
+
+
 
 @router.get('/{user_id}/delete', response_model=UserRead)
 async def delete_user(user_id: str, user_service: UserService = Depends(get_user_service)):
