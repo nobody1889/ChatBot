@@ -12,3 +12,5 @@ __pychack__/
 *.pyc
 
 .vscode
+
+test
