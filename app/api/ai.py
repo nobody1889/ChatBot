@@ -13,7 +13,7 @@ router = APIRouter(
 @router.post('/message', response_model=AiTextResponse)
 async def message_request(request_body: AiTextRequest):
     try:
-        message: str = request_body.get("message")
+        message: str = request_body.message
 
         if not message:
             raise HTTPException(
@@ -31,4 +31,8 @@ async def message_request(request_body: AiTextRequest):
     
     except Exception as e:
         logger.error(f"Error while Ai message request: {e}")
+        raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Error while Ai message request"
+            )
 
