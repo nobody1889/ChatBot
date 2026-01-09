@@ -10,10 +10,8 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     username: str
 
-class UserUpdate(BaseModel):
+class UserUpdate(UserBase):
     username: Optional[str] = None
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
     is_blocked: Optional[bool] = None
 
 class UserRead(UserBase):
