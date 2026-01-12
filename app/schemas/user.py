@@ -1,11 +1,13 @@
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
+from .ai import AssistantCreate
 
 class UserBase(BaseModel):
     user_id: str
     first_name: Optional[str] = None
     last_name: Optional[str] = None
+    ai_Assistants: Optional[List[AssistantCreate]] = None 
 
 class UserCreate(UserBase):
     username: str
