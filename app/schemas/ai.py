@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import Optional
 
@@ -13,6 +13,8 @@ class AssistantCreate(AssistantBase):
 class AssistantRead(AssistantBase):
     id: int
     created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
 
 class AssistantDelete(BaseModel):
     user_id: int
