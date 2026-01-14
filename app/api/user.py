@@ -45,6 +45,9 @@ async def get_user(user_id: str, user_service: UserService = Depends(get_user_se
 
         return UserRead.model_validate(user_obj)
     
+    except HTTPException as e:
+        raise e
+    
     except Exception as e:
         logger.error(f"Error getting user: {e}")
 
@@ -68,6 +71,9 @@ async def update_user(user: UserUpdate, user_service: UserService = Depends(get_
         
         logger.info(f"User updated: {user_obj}")
         return UserRead.model_validate(user_obj)
+    
+    except HTTPException as e:
+        raise e
     
     except Exception as e:
         logger.error(f"Error updating user: {e}")
@@ -93,6 +99,9 @@ async def block_user(user_id: str, user_service: UserService = Depends(get_user_
         logger.info(f"User blocked: {user_id}")
         return {"status": status.HTTP_200_OK, "message": f" user {user_id} blocked"}
     
+    except HTTPException as e:
+        raise e
+    
     except Exception as e:
         logger.error(f"Error blocking user: {e}")
 
@@ -113,6 +122,9 @@ async def unblock_user(user_id: str, user_service: UserService = Depends(get_use
         logger.info(f"User unblocked: {user_id}")
         return {"status": status.HTTP_200_OK, "message": f" user {user_id} unblocked"}
     
+    except HTTPException as e:
+        raise e
+    
     except Exception as e:
         logger.error(f"Error unblocking user: {e}")
 
@@ -120,24 +132,6 @@ async def unblock_user(user_id: str, user_service: UserService = Depends(get_use
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Error unblocking user"
         )
-
-@router.get('/all_users')
-async def get_all_users(service: UserService = Depends(get_user_service)):
-    users = await service.get_all_users()
-    
-    if not users:
-        return {
-            "status":"success",
-            "message":"no user in db"
-        }
-    
-    return {
-        "status":"success",
-        "message":"all users in response",
-        "response": users
-    }
-
-
 
 @router.get('/{user_id}/delete')
 async def delete_user(user_id: str, user_service: UserService = Depends(get_user_service)):
@@ -150,6 +144,9 @@ async def delete_user(user_id: str, user_service: UserService = Depends(get_user
 
         logger.info(f"User deleted: {user_id}")
         return {"status": status.HTTP_200_OK, "message": f" user {user_id} get delete"}
+    
+    except HTTPException as e:
+        raise e
     
     except Exception as e:
         logger.error(f"Error deleting user: {e}")
