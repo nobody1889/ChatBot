@@ -20,11 +20,14 @@ async def polling():
             continue
 
         async with async_sessionLocal() as db:
-            repo = UserRepository(db)
-            service = UserService(repo)
+            try:
+                repo = UserRepository(db)
+                service = UserService(repo)
 
-            for update in results:
-                offset = update["update_id"] + 1
-                await dispatcher(bot, update, service)
+                for update in results:
+                    offset = update["update_id"] + 1
+                    await dispatcher(bot, update, service)
 
-            await db.commit()
+                await db.commit()
+            except Exception as e:
+                pass
