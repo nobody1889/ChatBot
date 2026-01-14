@@ -16,6 +16,6 @@ class User(Base):
     last_name: Mapped[str] = mapped_column(String(255), nullable=True)
 
     is_blocked: Mapped[bool] = mapped_column(Boolean, default=False)
-    ai_Assistants: Mapped[list[Assistant]] = relationship("Assistant")
+    assistants: Mapped[list[Assistant]] = relationship("Assistant", back_populates="user")
 
     created_at: Mapped[datetime] = mapped_column(default=func.now())
