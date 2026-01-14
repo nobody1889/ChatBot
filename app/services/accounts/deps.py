@@ -5,7 +5,6 @@ from app.db import get_db
 from .user_repository import UserRepository
 from .user_service import UserService
 from app.core.logging import logging
-import asyncio
 
 logger = logging.getLogger(__name__)
 
@@ -18,9 +17,11 @@ async def get_user_service(db: AsyncSession = Depends(get_db)):
     
     except FastAPIError as e:
         logger.error(f"FastAPIError: {e}")
+        raise e
 
     except Exception as e:
         logger.error(f"error in get_user_service: {e}")
+        raise e
     
     finally:
         await db.commit()
