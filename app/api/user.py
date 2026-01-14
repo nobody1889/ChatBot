@@ -14,7 +14,7 @@ router = APIRouter(
 async def create_or_update_user(user: UserCreate, user_service: UserService = Depends(get_user_service)):
     try:
         user_obj = await user_service.update_or_create(user)
-        logger.info(f"User created or updated: {user_obj}")
+        logger.info(f"User created or updated: {user_obj.username or user.user_id}")
         return UserRead.model_validate(user_obj)
     
     except FastAPIError as e:
