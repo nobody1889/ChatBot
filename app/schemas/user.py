@@ -7,7 +7,6 @@ class UserBase(BaseModel):
     user_id: str
     first_name: Optional[str] = None
     last_name: Optional[str] = None
-    ai_Assistants: Optional[List[AssistantCreate]] = None 
 
 class UserCreate(UserBase):
     username: str
@@ -15,11 +14,12 @@ class UserCreate(UserBase):
 class UserUpdate(UserBase):
     username: Optional[str] = None
     is_blocked: Optional[bool] = None
+    assistants: Optional[List[AssistantCreate]] = None
 
 class UserRead(UserBase):
     id: int
     username: str
     created_at: datetime
     is_blocked: bool = False
-
+    assistants: Optional[List[AssistantCreate]] = None
     model_config = ConfigDict(from_attributes=True)
