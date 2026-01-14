@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from app.schemas import UserCreate, UserRead, UserUpdate
 from app.services.accounts import   UserService, get_user_service
 from app.core import logging
-
+from fastapi.exceptions import FastAPIError 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
@@ -10,13 +10,16 @@ router = APIRouter(
     tags=["User"],
 )
 
-@router.post("/", response_model=UserCreate)
+@router.post("/", response_model=UserRead)
 async def create_or_update_user(user: UserCreate, user_service: UserService = Depends(get_user_service)):
     try:
         user_obj = await user_service.update_or_create(user)
         logger.info(f"User created or updated: {user_obj}")
         return UserRead.model_validate(user_obj)
     
+    except FastAPIError as e:
+        logger.error(f"fastapi error in create or update: {e}")
+
     except Exception as e:
         logger.error(f"Error creating or updating user: {e}")
 
