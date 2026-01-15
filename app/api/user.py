@@ -14,7 +14,7 @@ router = APIRouter(
 async def create_or_update_user(user: UserCreate, user_service: UserService = Depends(get_user_service)):
     try:
         user_obj = await user_service.update_or_create(user)
-        logger.info(f"User created or updated: {user_obj.username or user.user_id}")
+        logger.info(f"User created or updated: {user_obj.username or user_obj.user_id}")
         return UserRead.model_validate(user_obj)
     
     except FastAPIError as e:
@@ -41,7 +41,7 @@ async def get_user(user_id: str, user_service: UserService = Depends(get_user_se
                 detail="User not found"
             )
         
-        logger.info(f"User found: {user_obj}")
+        logger.info(f"User found: {user_obj.username or user_obj.user_id}")
 
         return UserRead.model_validate(user_obj)
     
@@ -57,12 +57,12 @@ async def get_user(user_id: str, user_service: UserService = Depends(get_user_se
         )
     
 @router.put("/{user_id}", response_model=UserRead)
-async def update_user(user: UserUpdate, user_service: UserService = Depends(get_user_service)):
+async def update_user(user_id: str, user: UserUpdate, user_service: UserService = Depends(get_user_service)):
     try:
         user_obj = await user_service.update_user(user)
 
         if not user_obj:
-            logger.info(f"User not found: {user_obj.user_id}")
+            logger.info(f"User not found: {user.username or user_id}")
 
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, 
