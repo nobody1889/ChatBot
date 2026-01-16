@@ -1,11 +1,10 @@
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
-from typing import Optional
 
 class AssistantBase(BaseModel):
     user_id: int
     name: str
-    model: Optional[str] = None
+    model: str
 
 class AssistantCreate(AssistantBase):
     pass
