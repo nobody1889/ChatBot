@@ -46,7 +46,7 @@ async def get_user(user_id: str, user_service: UserService = Depends(get_user_se
         return UserRead.model_validate(user_obj)
     
     except HTTPException as e:
-        raise e
+        raise
     
     except Exception as e:
         logger.error(f"Error getting user: {e}")
@@ -73,7 +73,7 @@ async def update_user(user_id: str, user: UserUpdate, user_service: UserService 
         return UserRead.model_validate(user_obj)
     
     except HTTPException as e:
-        raise e
+        raise
     
     except Exception as e:
         logger.error(f"Error updating user: {e}")
@@ -100,7 +100,7 @@ async def block_user(user_id: str, user_service: UserService = Depends(get_user_
         return {"status": status.HTTP_200_OK, "message": f" user {user_id} blocked"}
     
     except HTTPException as e:
-        raise e
+        raise
     
     except Exception as e:
         logger.error(f"Error blocking user: {e}")
@@ -123,7 +123,7 @@ async def unblock_user(user_id: str, user_service: UserService = Depends(get_use
         return {"status": status.HTTP_200_OK, "message": f" user {user_id} unblocked"}
     
     except HTTPException as e:
-        raise e
+        raise
     
     except Exception as e:
         logger.error(f"Error unblocking user: {e}")
@@ -146,7 +146,7 @@ async def delete_user(user_id: str, user_service: UserService = Depends(get_user
         return {"status": status.HTTP_200_OK, "message": f" user {user_id} get delete"}
     
     except HTTPException as e:
-        raise e
+        raise
     
     except Exception as e:
         logger.error(f"Error deleting user: {e}")

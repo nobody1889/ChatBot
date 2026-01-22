@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 from app.schemas import AiTextResponse, AiTextRequest
 from app.core import logging
 from app.services.assistant import AiClient
@@ -12,24 +12,25 @@ router = APIRouter(
 
 @router.post('/message', response_model=AiTextResponse)
 async def message_request(request_body: AiTextRequest):
-    try:
-        message: str = request_body.message
+    message: str = request_body.message
 
-        if not message:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Missing 'message' field in request body."
-            )
-        
-        ai = AiClient()
-        response:AiTextResponse = await ai.chat(message=message)
-
-        return response
-    
-    except Exception as e:
-        logger.error(f"Error while Ai message request: {e}")
+    if not message or not message.strip():
         raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Error while Ai message request"
-            )
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Message cannot be empty"
+        )
 
+    try:
+        ai = AiClient()
+        response: AiTextResponse = await ai.chat(message=message)
+        return response
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected error in AI message request: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error"
+        )
+    
