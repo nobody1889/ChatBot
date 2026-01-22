@@ -6,7 +6,7 @@ class AssistantBase(BaseModel):
     model: str
 
 class AssistantCreate(AssistantBase):
-    user_id: int
+    id: int
 
 class AssistantRead(AssistantBase):
     id: int
@@ -18,7 +18,7 @@ class AssistantDelete(BaseModel):
     id: int
 
 class AssistantUpdate(AssistantBase):
-    user_id: int
+    id: int
 
 class AiTextRequest(BaseModel):
     message: str
