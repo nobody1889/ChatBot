@@ -1,0 +1,2 @@
+class AssistantRepository:
+    pass

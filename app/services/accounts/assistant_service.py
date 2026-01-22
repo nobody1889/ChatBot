@@ -1,0 +1,2 @@
+class AssistantService:
+    pass
