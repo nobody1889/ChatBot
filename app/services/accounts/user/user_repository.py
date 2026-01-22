@@ -10,23 +10,23 @@ class UserRepository:
         self.db = db
 
     async def get_by_user_id(self, user_id: str) -> Optional[User]:
-        stmt = (
+        query = (
             select(User)
             .options(selectinload(User.assistants))
             .where(User.user_id == user_id)
         )
 
-        result = await self.db.execute(stmt)
+        result = await self.db.execute(query)
         return result.scalar_one_or_none()
 
     async def get_by_username(self, username: str) -> Optional[User]:
-        stmt = (
+        query = (
             select(User)
             .options(selectinload(User.assistants))
             .where(User.username == username)
         )
         
-        result = await self.db.execute(stmt)
+        result = await self.db.execute(query)
         return result.scalar_one_or_none()
 
     async def create(self, user: UserCreate) -> User:
