@@ -12,7 +12,6 @@ class UserCreate(UserBase):
     username: str
 
 class UserUpdate(BaseModel):
-    user_id: str
     username: Optional[str] = None
     first_name: Optional[str] = None
     last_name: Optional[str] = None
