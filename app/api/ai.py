@@ -24,10 +24,7 @@ async def message_request(request_body: AiTextRequest):
         ai = AiClient()
         respopnse:AiTextResponse = await ai.chat(message=message)
 
-        return {
-            "status": "success",
-            "message": respopnse
-        }
+        return respopnse
     
     except Exception as e:
         logger.error(f"Error while Ai message request: {e}")
