@@ -2,12 +2,11 @@ from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 
 class AssistantBase(BaseModel):
-    user_id: int
     name: str
     model: str
 
 class AssistantCreate(AssistantBase):
-    pass
+    user_id: int
 
 class AssistantRead(AssistantBase):
     id: int
@@ -20,7 +19,7 @@ class AssistantDelete(BaseModel):
     name: int
 
 class AssistantUpdate(AssistantBase):
-    pass
+    user_id: int
 
 class AiTextRequest(BaseModel):
     message: str
