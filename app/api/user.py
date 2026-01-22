@@ -59,10 +59,10 @@ async def get_user(user_id: str, user_service: UserService = Depends(get_user_se
 @router.put("/{user_id}", response_model=UserRead)
 async def update_user(user_id: str, user: UserUpdate, user_service: UserService = Depends(get_user_service)):
     try:
-        user_obj = await user_service.update_user(user)
+        user_obj = await user_service.update_user(user_id)
 
         if not user_obj:
-            logger.info(f"User not found: {user.username or user_id}")
+            logger.info(f"User not found: {user_id}")
 
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, 
@@ -133,12 +133,12 @@ async def unblock_user(user_id: str, user_service: UserService = Depends(get_use
             detail="Error unblocking user"
         )
 
-@router.get('/{user_id}/delete')
+@router.delete('/{user_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_user(user_id: str, user_service: UserService = Depends(get_user_service)):
     try:
-        response = await user_service.delete_user(user_id)
+        status = await user_service.delete_user(user_id)
 
-        if not response:
+        if not status:
             logger.info(f"User not found: {user_id}")
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
