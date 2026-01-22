@@ -56,13 +56,13 @@ async def get_user(user_id: str, user_service: UserService = Depends(get_user_se
             detail="Error getting user"
         )
     
-@router.put("/{user_id}", response_model=UserRead)
-async def update_user(user_id: str, user: UserUpdate, user_service: UserService = Depends(get_user_service)):
+@router.put("/", response_model=UserRead)
+async def update_user(user: UserUpdate, user_service: UserService = Depends(get_user_service)):
     try:
-        user_obj = await user_service.update_user(user_id)
+        user_obj = await user_service.update_user(user)
 
         if not user_obj:
-            logger.info(f"User not found: {user_id}")
+            logger.info(f"User not found: {user.user_id}")
 
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, 
