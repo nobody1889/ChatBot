@@ -3,17 +3,30 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.schemas.user import UserCreate, UserUpdate
 from typing import Optional
 from sqlalchemy import select, update
+from sqlalchemy.orm import selectinload
 
 class UserRepository:
     def __init__(self, db: AsyncSession):
         self.db = db
 
     async def get_by_user_id(self, user_id: str) -> Optional[User]:
-        result = await self.db.execute(select(User).where(User.user_id == user_id))
+        stmt = (
+            select(User)
+            .options(selectinload(User.assistants))
+            .where(User.user_id == user_id)
+        )
+
+        result = await self.db.execute(stmt)
         return result.scalar_one_or_none()
 
     async def get_by_username(self, username: str) -> Optional[User]:
-        result = await self.db.execute(select(User).where(User.username == username))
+        stmt = (
+            select(User)
+            .options(selectinload(User.assistants))
+            .where(User.username == username)
+        )
+        
+        result = await self.db.execute(stmt)
         return result.scalar_one_or_none()
 
     async def create(self, user: UserCreate) -> User:
@@ -21,6 +34,7 @@ class UserRepository:
         self.db.add(user_db)
         
         await self.db.flush()
+        await self.db.refresh(user_db)
         return user_db
 
     async def update(self, user: User, data: UserUpdate) -> User:
@@ -33,7 +47,8 @@ class UserRepository:
     async def update_or_create(self, user: UserCreate) -> User:
         user_db = await self.get_by_user_id(user.user_id)
         if user_db:
-            return await self.update(user_db, user)
+            update_data = UserUpdate(**user.model_dump())
+            return await self.update(user_db, update_data)
         return await self.create(user)
 
     async def set_block(self, user_id: str, block: bool) -> bool:
