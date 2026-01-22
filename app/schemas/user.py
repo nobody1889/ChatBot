@@ -14,21 +14,17 @@ class UserCreate(UserBase):
 class UserUpdate(UserBase):
     username: Optional[str] = None
     is_blocked: Optional[bool] = None
-    assistants: Optional[List[AssistantCreate]] = None
 
 class UserRead(BaseModel):
     id: int
-
     user_id: str
     first_name: Optional[str] = None
     last_name: Optional[str] = None
     username: str
 
-    assistants: List[AssistantCreate]
+    assistants: List[AssistantCreate] = []
 
     is_blocked: bool = False
     created_at: datetime
-    
-    
 
     model_config = ConfigDict(from_attributes=True)
