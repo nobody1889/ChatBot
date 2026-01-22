@@ -20,8 +20,8 @@ class UserService:
     async def get_or_create_user(self, user: UserCreate) -> User:
         return await self.user_repository.get_or_create(user)
 
-    async def update_user(self, data: UserUpdate) -> User:
-        user = await self.get_by_user_id(data.user_id)
+    async def update_user(self, user_id: str, data: UserUpdate) -> User:
+        user = await self.get_by_user_id(user_id)
 
         if hasattr(user, "is_blocked") and user.is_blocked:
             raise ValueError("Cannot update blocked status directly via update_user")
