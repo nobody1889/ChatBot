@@ -15,8 +15,7 @@ class AssistantRead(AssistantBase):
     model_config = ConfigDict(from_attributes=True)
 
 class AssistantDelete(BaseModel):
-    user_id: int
-    name: int
+    id: int
 
 class AssistantUpdate(AssistantBase):
     user_id: int
