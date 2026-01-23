@@ -2,11 +2,11 @@ from typing import Optional
 from .user_repository import UserRepository
 from app.schemas.user import UserCreate, UserUpdate
 from app.models.user import User
-
+from sqlalchemy.ext.asyncio import AsyncSession
 
 class UserService:
-    def __init__(self, user_repository: UserRepository):
-        self.user_repository = user_repository
+    def __init__(self, db: AsyncSession):
+        self.user_repository = UserRepository(db)
 
     async def get_by_user_id(self, user_id: str) -> Optional[User]:
         return await self.user_repository.get_by_user_id(user_id)
