@@ -7,7 +7,7 @@ class AssistantBase(BaseModel):
     model: str
 
 class AssistantCreate(AssistantBase):
-    id: int
+    user_id: int
 
 class AssistantRead(AssistantBase):
     id: int
