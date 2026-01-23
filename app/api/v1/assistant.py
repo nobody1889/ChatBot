@@ -17,9 +17,10 @@ async def create_assistant(data: AssistantCreate, service: AssistantService = De
         assistant_obj: AssistantRead = await service.create_assistant(data)
         logger.info(f"Assistant created: {assistant_obj.name} for user {assistant_obj.user_id}")
         return assistant_obj
+    
     except Exception as e:
         logger.error(f"Error creating assistant: {e}")
-        raise HTTPException(status_code=500, detail="Internal Server Error")
+        raise
 
 
 @router.get("/user/{user_id}", response_model=list[AssistantRead])
@@ -50,6 +51,10 @@ async def delete_assistant( data: AssistantDelete, service: AssistantService = D
         success = await service.delete(data)
         if not success:
             raise HTTPException(status_code=404, detail="Assistant not found")
+    except ValueError:
+        logger.error(f"did not passed id or name for deleting user {data.user_id}")
+        raise
+
     except Exception as e:
         logger.error(f"Error deleting assistant: {e}")
         raise 
