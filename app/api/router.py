@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from .user import router as user_router
-from .ai import router as ai_router
+from .assistant import router as ai_router
 
 router = APIRouter()
 
