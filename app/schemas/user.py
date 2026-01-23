@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import Optional, List
-from .assistant import AssistantCreate
+from .assistant import AssistantRead
 
 class UserBase(BaseModel):
     user_id: str
@@ -24,7 +24,7 @@ class UserRead(BaseModel):
     last_name: str
     username: str
 
-    assistants: List[AssistantCreate] = []
+    assistants: List[AssistantRead] = []
 
     is_blocked: bool = False
     created_at: datetime
