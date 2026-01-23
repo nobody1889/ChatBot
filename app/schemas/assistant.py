@@ -5,9 +5,10 @@ from typing import Optional
 class AssistantBase(BaseModel):
     name: str
     model: str
+    user_id: int
 
 class AssistantCreate(AssistantBase):
-    user_id: int
+    pass
 
 class AssistantRead(AssistantBase):
     id: int
@@ -29,7 +30,7 @@ class AssistantDelete(BaseModel):
     
 
 class AssistantUpdate(AssistantBase):
-    id: int
+    pass
 
 class AiTextRequest(BaseModel):
     message: str
