@@ -27,13 +27,13 @@ class AssistantRepository:
         return result.scalar_one_or_none()
 
     
-    async def delete(self, assistant: AssistantDelete)-> bool:
-        query = select(Assistant).where(Assistant.user_id == assistant.user_id)
+    async def delete(self, data: AssistantDelete)-> bool:
+        query = select(Assistant).where(Assistant.user_id == data.user_id)
         
-        if assistant.name:
-            query = query.where(Assistant.name == assistant.name)
+        if data.name:
+            query = query.where(Assistant.name == data.name)
         else:
-            query = query.where(Assistant.id == assistant.id)
+            query = query.where(Assistant.id == data.id)
         
         result = await self.db.execute(query)
         
