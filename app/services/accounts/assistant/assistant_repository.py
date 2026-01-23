@@ -8,12 +8,11 @@ class AssistantRepository:
     def __init__(self, db: AsyncSession):
         self.db = db
 
-    async def create(self, assisstant: AssistantCreate)-> Assistant:
-        assisstant_db = Assistant(**assisstant.model_dump())
-        self.db.add(assisstant_db)
+    async def create(self, assisstant: Assistant)-> Assistant:
+        self.db.add(assisstant)
 
         await self.db.flush()
-        return assisstant_db
+        return assisstant
 
     async def get_by_user_id(self, user_id: int)-> List:
         query = select(Assistant).where(Assistant.user_id == user_id)
