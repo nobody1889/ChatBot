@@ -5,7 +5,7 @@ from app.core import logging
 
 logger = logging.getLogger(__name__)
 
-class AiClient:
+class AssistantClient:
     def __init__(self):
         self.base_url = settings.ollama_url
         self.model = settings.ollama_model
