@@ -6,7 +6,7 @@ from app.services.assistant import AssistantClient as AiClient
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/api/ai",
+    prefix="/api/v1/ai",
     tags=["Ai"],
 )
 

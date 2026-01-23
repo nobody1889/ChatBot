@@ -6,7 +6,7 @@ from fastapi.exceptions import FastAPIError
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/accounts/user",
+    prefix="/api/v1/accounts/user",
     tags=["User"],
 )
 
