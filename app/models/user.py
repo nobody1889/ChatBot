@@ -3,7 +3,8 @@ from sqlalchemy import String, Boolean, Integer
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 from sqlalchemy.sql import func
 from datetime import datetime
-from .ai import Assistant
+from .assistant import Assistant
+
 class User(Base):
     __tablename__ = "users"
 

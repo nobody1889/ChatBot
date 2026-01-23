@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import Optional, List
-from .ai import AssistantCreate
+from .assistant import AssistantCreate
 
 class UserBase(BaseModel):
     user_id: str

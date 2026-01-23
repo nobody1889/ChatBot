@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.schemas.ai import AssistantCreate, AssistantDelete, AssistantRead
-from app.models.ai import Assistant
+from app.schemas.assistant import AssistantCreate, AssistantDelete, AssistantRead
+from app.models.assistant import Assistant
 from sqlalchemy import select
 from typing import List, Optional
 

@@ -1,5 +1,5 @@
 from .assistant_repository import AssistantRepository
-from app.schemas.ai import AssistantCreate, AssistantDelete
+from app.schemas.assistant import AssistantCreate, AssistantDelete
 
 class AssistantService:
     def __init__(self, assistant_repo: AssistantRepository):
