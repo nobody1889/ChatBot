@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 from app.schemas import AiTextResponse, AiTextRequest
 from app.core import logging
-from app.services.assistant import AiClient
+from app.services.assistant import AssistantClient as AiClient 
 
 logger = logging.getLogger(__name__)
 

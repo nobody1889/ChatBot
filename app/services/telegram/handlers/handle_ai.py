@@ -1,4 +1,4 @@
-from app.services.assistant import AiClient
+from app.services.assistant import AssistantClient as AiClient
 from app.core.logging import logging
 
 logger = logging.getLogger(__name__)
