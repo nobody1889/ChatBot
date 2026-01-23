@@ -12,7 +12,7 @@ class Assistant(Base):
     name: Mapped[str] = mapped_column(String(100), unique=True)
     model: Mapped[str] = mapped_column(String(255))
 
-    user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     user = relationship("User", back_populates="assistants")
 
     created_at: Mapped[datetime] = mapped_column(default=func.now()) 
