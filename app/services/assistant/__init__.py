@@ -1,5 +1,5 @@
-from .ai_client import AiClient
+from .client import AssistantClient
 
 __all__ = [
-    "AiClient"
+    "AssistantClient"
 ]
