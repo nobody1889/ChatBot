@@ -2,7 +2,7 @@ from .bot_client import BotClient
 from .handlers.handle_updates import dispatcher
 from app.core import logging
 from app.db.session import async_sessionLocal
-from app.services.accounts import UserRepository, UserService
+from app.services.accounts import UserService
 
 logger = logging.getLogger(__name__)
 
@@ -21,8 +21,7 @@ async def polling():
 
         async with async_sessionLocal() as db:
             try:
-                repo = UserRepository(db)
-                service = UserService(repo)
+                service = UserService(db)
 
                 for update in results:
                     offset = update["update_id"] + 1
