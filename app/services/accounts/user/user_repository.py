@@ -51,6 +51,12 @@ class UserRepository:
             return await self.update(user_db, update_data)
         return await self.create(user)
 
+    async def get_or_create(self, user: UserCreate) -> User:
+        user_db = await self.get_by_user_id(user.user_id)
+        if user_db:
+            return user_db
+        return await self.create(user)
+
     async def set_block(self, user_id: str, block: bool) -> bool:
         result = await self.db.execute(
             update(User).where(User.user_id == user_id).values(is_blocked=block)
