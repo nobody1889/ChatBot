@@ -5,6 +5,7 @@ load_dotenv()
 
 class Settings(BaseSettings):
     bot_token: str
+    telegram_bot_link: str
 
     ollama_url: str
     ollama_model: str
