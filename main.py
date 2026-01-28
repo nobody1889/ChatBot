@@ -6,6 +6,7 @@ from app.core import logging
 from app.api import all_routes
 import asyncio
 import httpx
+from app.core import settings 
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +45,7 @@ async def root():
     return {
         "message": {
             "text":"wellcome to chatbot",
-            "bot": "https://t.me/my_chatbot_ai_botss"
+            "bot": settings.telegram_bot_link
             }
         }
 
