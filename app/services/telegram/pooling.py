@@ -1,8 +1,6 @@
 from .bot_client import BotClient
 from .handlers.handle_updates import dispatcher
 from app.core import logging
-from app.db.session import async_sessionLocal
-from app.services.accounts import UserService
 
 logger = logging.getLogger(__name__)
 
@@ -18,15 +16,10 @@ async def polling():
 
         if not results:
             continue
-
-        async with async_sessionLocal() as db:
-            try:
-                service = UserService(db)
-
-                for update in results:
-                    offset = update["update_id"] + 1
-                    await dispatcher(bot, update, service)
-
-                await db.commit()
-            except Exception as e:
-                logging(f"error on telegram bot {e}")
+        
+        try:
+            for update in results:
+                offset = update["update_id"] + 1
+                await dispatcher(bot, update)
+        except Exception as e:
+            logging(f"error on telegram bot {e}")
