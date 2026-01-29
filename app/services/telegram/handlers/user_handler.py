@@ -34,3 +34,6 @@ class UserHandler:
             user = r.json()
 
         return user
+    
+    async def close(self):
+        await self._client.aclose()
