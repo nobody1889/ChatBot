@@ -1,7 +1,6 @@
 from .handle_commands import command_handler
 from .handle_ai import handle_ai_message
 from .user_handler import UserHandler
-from app.schemas import UserRead
 
 async def dispatcher(bot, update: dict):
     if "message" not in update:
@@ -14,9 +13,9 @@ async def dispatcher(bot, update: dict):
     text: str = message.get("text")
 
     
-    user: UserRead = await handler.get_or_create_user(data = message)
+    user: dict = await handler.get_or_create_user(data = message)
 
-    if user.is_blocked:
+    if user.get("is_blocked"):
         await bot.sendMessage(chat_id, "🚫 You are blocked.")
         return
 
