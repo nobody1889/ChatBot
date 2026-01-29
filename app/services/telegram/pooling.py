@@ -29,4 +29,4 @@ async def polling():
 
                 await db.commit()
             except Exception as e:
-                pass
+                logging(f"error on telegram bot {e}")
