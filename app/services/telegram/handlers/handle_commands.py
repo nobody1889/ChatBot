@@ -1,11 +1,10 @@
 from app.services.telegram.bot_client import BotClient
-from app.schemas import  UserRead
 
 async def start_command(bot: BotClient, chat_id: str):
-    await bot.sendMessage(chat_id, f"wellcome to chatbot")
+    await bot.sendMessage(chat_id, "Welcome to the chatbot 👋")
 
 async def help_command(bot: BotClient, chat_id: str):
-    await bot.sendMessage(chat_id, "I'm a Ai bot. plz tell me what you need?")
+    await bot.sendMessage(chat_id, "I'm an AI bot 🤖. Tell me what you need!")
     
 async def list_command(bot: BotClient, chat_id: str):
     await bot.sendMessage(
@@ -34,11 +33,11 @@ async def new_chat_command(bot: BotClient, chat_id: str):
 COMMANDS = {
     "/start": start_command,
     "/help": help_command,
-    "/MyList": list_command,
-    "/NewChat": new_chat_command
+    "/mylist": list_command,
+    "/new_chat": new_chat_command
 }
 
-async def command_handler(bot, chat_id: str, text):
+async def command_handler(bot, chat_id: str, text: str):
     cmd = text.split()[0]
 
     if cmd in COMMANDS:
