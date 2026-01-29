@@ -22,7 +22,7 @@ async def dispatcher(bot, update: dict):
 
     if text:
         if text.startswith("/"):
-            await command_handler(bot, chat_id, text)
+            await command_handler(bot, chat_id, text, user)
         else:
             await handle_ai_message(bot, chat_id, text)
     else:
