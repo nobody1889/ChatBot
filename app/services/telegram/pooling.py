@@ -21,5 +21,6 @@ async def polling():
             for update in results:
                 offset = update["update_id"] + 1
                 await dispatcher(bot, update)
+
         except Exception as e:
-            logging(f"error on telegram bot {e}")
+            logging.error(f"error on telegram bot {e}")
