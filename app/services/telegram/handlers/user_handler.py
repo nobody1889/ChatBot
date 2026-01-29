@@ -4,7 +4,7 @@ import httpx
 
 class UserHandler:
     def __init__(self, bot: BotClient):
-        self.base_url = f"http://v1/accounts/"
+        self.base_url = f"http://api/v1/accounts/"
         self._client = httpx.AsyncClient(
             base_url=self.base_url,
             timeout=httpx.Timeout(15.0),
@@ -14,7 +14,7 @@ class UserHandler:
 
     async def get_or_create_user(self, data: dict) -> UserRead:
         user_create = UserCreate(
-            user_id=data["chat"]["id"],
+            user_id=str(data["chat"]["id"]),
             username=data["from"].get("username"),
             first_name=data["from"].get("first_name"),
             last_name=data["from"].get("last_name"),
@@ -29,7 +29,7 @@ class UserHandler:
         else:
             user = await self._client.post(
                 "/user",
-                json=user_create,
+                json=user_create.model_dump(),
             )
             user = r.json()
 
