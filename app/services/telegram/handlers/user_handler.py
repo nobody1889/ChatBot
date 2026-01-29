@@ -1,10 +1,10 @@
 from ..bot_client import BotClient
-from app.schemas import UserCreate, UserRead
+from app.schemas import UserCreate
 import httpx
 
 class UserHandler:
     def __init__(self, bot: BotClient):
-        self.base_url = f"http://api/v1/accounts/"
+        self.base_url = "http://localhost:8000/api/v1/accounts"
         self._client = httpx.AsyncClient(
             base_url=self.base_url,
             timeout=httpx.Timeout(15.0),
@@ -12,26 +12,26 @@ class UserHandler:
 
         self.bot = bot
 
-    async def get_or_create_user(self, data: dict) -> UserRead:
+    async def get_or_create_user(self, data: dict) -> dict:
         user_create = UserCreate(
-            user_id=str(data["chat"]["id"]),
+            user_id=str(data["from"]["id"]),
             username=data["from"].get("username"),
             first_name=data["from"].get("first_name"),
             last_name=data["from"].get("last_name"),
         ) 
 
-        r = await self.bot._client.get(
+        resp = await self._client.get(
             f"/user/{user_create.user_id}",
         )
 
-        if r.status_code == 200:
-            user = r.json()
+        if resp.status_code == 200:
+            user = resp.json()
         else:
-            user = await self._client.post(
+            resp = await self._client.post(
                 "/user",
                 json=user_create.model_dump(),
             )
-            user = r.json()
+            user = resp.json()
 
         return user
     
