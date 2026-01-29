@@ -1,3 +1,4 @@
+import json
 import httpx
 from app.core import settings
 
@@ -12,15 +13,18 @@ class BotClient:
     async def close(self):
         await self._client.aclose()
 
-    async def sendMessage(self, chat_id: str, text: str, reply_to_message_id: int = None, reply_markup: dict = None) -> dict:
+    async def sendMessage(self, chat_id: int, text: str, reply_markup: dict | None = None):
+        payload = {
+            "chat_id": chat_id,
+            "text": text,
+        }
+
+        if reply_markup:
+            payload["reply_markup"] = json.dumps(reply_markup)
+
         r = await self._client.post(
             "/sendMessage",
-            params={
-                "chat_id": chat_id,
-                "text": text,
-                "reply_to_message_id": reply_to_message_id,
-                "reply_markup": reply_markup
-            },
+            data=payload,
         )
         r.raise_for_status()
         return r.json()
