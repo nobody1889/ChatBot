@@ -18,7 +18,7 @@ class AssistantRead(BaseModel):
 
 class AssistantDelete(BaseModel):
     id: Optional[int] = None
-
+    model:Optional[str] = None
     user_id: str
 
     @model_validator(mode="before")
