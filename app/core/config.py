@@ -1,5 +1,4 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Json
 from typing import List
 
 class Settings(BaseSettings):
@@ -7,7 +6,7 @@ class Settings(BaseSettings):
     telegram_bot_link: str
 
     ollama_url: str
-    ollama_models: Json[List[str]]
+    ollama_models: List[str]
 
     database_url: str
     
