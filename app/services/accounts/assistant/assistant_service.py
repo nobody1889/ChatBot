@@ -35,6 +35,12 @@ class AssistantService:
             raise HTTPException(status_code=404, detail="Assistant not found")
         return assistant
     
+    async def set_default_assistant(self, telegram_user_id: str, model: str):
+        user = await self.user_repo.get_by_user_id(telegram_user_id)
+        if not user:
+            raise HTTPException(status_code=404, detail=f"User {telegram_user_id} not found")
+        return await self.assistant_repo.set_assistant_default(user.id, model)
+
     async def delete(self, data: AssistantDelete):
         user = await self.user_repo.get_by_user_id(data.user_id)
         if not user:
