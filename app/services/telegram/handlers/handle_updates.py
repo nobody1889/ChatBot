@@ -27,7 +27,7 @@ async def handle_message(bot, message: dict) -> None:
         if text.startswith("/"):
             await command_handler(bot, chat_id, text)
         else:
-            await handle_ai_message(bot, chat_id, text)
+            await handle_ai_message(bot=bot, user=user, message=text, message_id=message.get("message_id"))
     else:
         await bot.sendMessage(chat_id, "i just handle text message 💔💔")
     
