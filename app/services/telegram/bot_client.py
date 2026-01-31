@@ -11,9 +11,10 @@ class BotClient:
         )
 
     async def close(self):
+        
         await self._client.aclose()
 
-    async def sendMessage(self, chat_id: int, text: str, reply_markup: dict | None = None):
+    async def sendMessage(self, chat_id: int, text: str, reply_message_id: int | None = None, reply_markup: dict | None = None):
         payload = {
             "chat_id": chat_id,
             "text": text,
@@ -21,6 +22,10 @@ class BotClient:
 
         if reply_markup:
             payload["reply_markup"] = json.dumps(reply_markup)
+        if reply_message_id:
+            payload["reply_parameters"] = json.dumps({
+                "message_id": reply_message_id,
+                })
 
         r = await self._client.post(
             "/sendMessage",
