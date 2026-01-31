@@ -9,8 +9,7 @@ class Assistant(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     
-    name: Mapped[str] = mapped_column(String(100), unique=True)
-    model: Mapped[str] = mapped_column(String(255))
+    model: Mapped[str] = mapped_column(String(255), unique=True, index=True)
 
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     user = relationship("User", back_populates="assistants")
