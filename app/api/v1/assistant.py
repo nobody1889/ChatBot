@@ -44,6 +44,19 @@ async def get_user_assistant(user_id: str, model: str, service: AssistantService
         logger.error(f"Error retrieving assistant {model} for user {user_id}: {e}")
         raise 
 
+@router.put("/user/{user_id}/model/{model}")
+async def set_default_assistant(user_id: str, model: str, service: AssistantService = Depends(get_assistant_service)):
+    try:
+        assistant = await service.set_default_assistant(user_id, model)
+        logger.info(f"Assistant {model} set as default for user {user_id}")
+        return assistant
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        logger.error(f"Error setting default assistant: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
 @router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_assistant( data: AssistantDelete, service: AssistantService = Depends(get_assistant_service)):
