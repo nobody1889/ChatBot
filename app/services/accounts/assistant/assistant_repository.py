@@ -20,9 +20,9 @@ class AssistantRepository:
         return result.scalars().all()
         
 
-    async def get_by_name(self, user_id: int, name: str) -> Optional[Assistant]:
+    async def get_by_model(self, user_id: int, model: str) -> Optional[Assistant]:
         query = select(Assistant).where(Assistant.user_id == user_id)
-        query = query.where(Assistant.name == name)
+        query = query.where(Assistant.model == model)
         result = await self.db.execute(query)
         return result.scalar_one_or_none()
 
@@ -30,8 +30,8 @@ class AssistantRepository:
     async def delete(self, data: AssistantDelete)-> bool:
         query = select(Assistant).where(Assistant.user_id == data.user_id)
         
-        if data.name:
-            query = query.where(Assistant.name == data.name)
+        if data.model:
+            query = query.where(Assistant.model == data.model)
         else:
             query = query.where(Assistant.id == data.id)
         

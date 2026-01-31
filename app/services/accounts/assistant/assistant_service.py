@@ -16,7 +16,6 @@ class AssistantService:
             raise HTTPException(status_code=404, detail=f"User {data.user_id} not found")
         assistant = Assistant(
             user_id=user.id,
-            name=data.name,
             model=data.model
         )
         return await self.assistant_repo.create(assistant)
@@ -27,11 +26,11 @@ class AssistantService:
             raise HTTPException(status_code=404, detail=f"User {telegram_user_id} not found")
         return await self.assistant_repo.get_by_user_id(user.id)
 
-    async def get_user_assistant(self, telegram_user_id: str, name: str):
+    async def get_user_assistant(self, telegram_user_id: str, model: str):
         user = await self.user_repo.get_by_user_id(telegram_user_id)
         if not user:
             raise HTTPException(status_code=404, detail=f"User {telegram_user_id} not found")
-        assistant = await self.assistant_repo.get_by_name(user.id, name)
+        assistant = await self.assistant_repo.get_by_model(user.id, model)
         if not assistant:
             raise HTTPException(status_code=404, detail="Assistant not found")
         return assistant

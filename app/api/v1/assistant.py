@@ -15,7 +15,7 @@ router = APIRouter(
 async def create_assistant(data: AssistantCreate, service: AssistantService = Depends(get_assistant_service)):
     try:
         assistant_obj: AssistantRead = await service.create_assistant(data)
-        logger.info(f"Assistant created: {assistant_obj.name} for user {assistant_obj.user_id}")
+        logger.info(f"Assistant created: {assistant_obj.model} for user {assistant_obj.user_id}")
         return assistant_obj
     
     except Exception as e:
@@ -33,15 +33,15 @@ async def get_user_assistants(user_id: str, service: AssistantService = Depends(
         logger.error(f"Error retrieving assistants for user {user_id}: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
-@router.get("/user/{user_id}/name/{name}", response_model=AssistantRead)
-async def get_user_assistant(user_id: str, name: str, service: AssistantService = Depends(get_assistant_service)):
+@router.get("/user/{user_id}/model/{model}", response_model=AssistantRead)
+async def get_user_assistant(user_id: str, model: str, service: AssistantService = Depends(get_assistant_service)):
     try:
-        assistant = await service.get_user_assistant(user_id, name)
+        assistant = await service.get_user_assistant(user_id, model)
         if not assistant:
             raise HTTPException(status_code=404, detail="Assistant not found")
         return assistant
     except Exception as e:
-        logger.error(f"Error retrieving assistant {name} for user {user_id}: {e}")
+        logger.error(f"Error retrieving assistant {model} for user {user_id}: {e}")
         raise 
 
 
@@ -52,7 +52,7 @@ async def delete_assistant( data: AssistantDelete, service: AssistantService = D
         if not success:
             raise HTTPException(status_code=404, detail="Assistant not found")
     except ValueError:
-        logger.error(f"did not passed id or name for deleting user {data.user_id}")
+        logger.error(f"did not passed id or model for deleting user {data.user_id}")
         raise
 
     except Exception as e:
