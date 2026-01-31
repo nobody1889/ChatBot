@@ -3,7 +3,6 @@ from datetime import datetime
 from typing import Optional
 
 class AssistantBase(BaseModel):
-    name: str
     model: str
     user_id: str
 
@@ -13,21 +12,19 @@ class AssistantCreate(AssistantBase):
 class AssistantRead(BaseModel):
     id: int
     created_at: datetime
-    name: str
     model: str
     user_id: int
     model_config = ConfigDict(from_attributes=True)
 
 class AssistantDelete(BaseModel):
     id: Optional[int] = None
-    name: Optional[str] = None
 
     user_id: str
 
     @model_validator(mode="before")
     def check_id_or_name(cls, values):
-        if not values.get("id") and not values.get("name"):
-            raise ValueError("Must provide either id or name to delete assistant")
+        if not values.get("id") and not values.get("model"):
+            raise ValueError("Must provide either id or model to delete assistant")
         return values
     
 
