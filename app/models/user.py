@@ -20,3 +20,6 @@ class User(Base):
     assistants: Mapped[list[Assistant]] = relationship("Assistant", back_populates="user", lazy="selectin", cascade="all, delete-orphan")
 
     created_at: Mapped[datetime] = mapped_column(default=func.now())
+
+    def __repr__(self):
+        return f"<User id={self.id} user_id={self.user_id} username={self.username} is_blocked={self.is_blocked}>"

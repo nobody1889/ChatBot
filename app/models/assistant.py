@@ -16,3 +16,6 @@ class Assistant(Base):
     user = relationship("User", back_populates="assistants")
 
     created_at: Mapped[datetime] = mapped_column(default=func.now()) 
+
+    def __repr__(self):
+        return f"<Assistant id={self.id} name={self.name} model={self.model}>"
