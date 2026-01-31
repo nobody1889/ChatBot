@@ -32,7 +32,8 @@ async def polling():
         except httpx.ReadTimeout as e:
             logger.warning(f"Telegram polling read timeout : {e}")
             await asyncio.sleep(1)
-
+        except httpx.ConnectError:
+            logger.warning(f"check your connection!!!")
         except HTTPError:
             logger.exception("HTTP error during Telegram polling")
             await asyncio.sleep(2)
