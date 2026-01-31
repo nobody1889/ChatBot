@@ -2,13 +2,19 @@ import json
 import httpx
 from app.core import settings
 from app.core import logging
+from app.schemas.assistant import AssistantRead
 
 logger = logging.getLogger(__name__)
 
 class AssistantClient:
-    def __init__(self):
+    def __init__(self, assistant: AssistantRead):
         self.base_url = settings.ollama_url
-        self.model = settings.ollama_model
+        required_model = assistant["model"]
+
+        if required_model in settings.ollama_models:
+            self.model = required_model
+        else:
+            raise "need better exception handling"
 
         self.client = httpx.AsyncClient(
             headers={"Content-Type": "application/json"},
@@ -93,5 +99,3 @@ class AssistantClient:
 
     async def close(self):
         await self.client.aclose()
-
-
