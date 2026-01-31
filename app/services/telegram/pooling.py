@@ -22,17 +22,15 @@ async def polling():
                 continue
 
             for update in results:
-                offset = update["update_id"] + 1
-                try:
-                    await dispatcher(bot, update)
-                except Exception:
-                    logger.exception(
-                        "Error while processing update",
-                        extra={"update_id": update.get("update_id")}
-                    )
+                offset = update["update_id"] + 1    
+                await dispatcher(bot, update)
 
         except httpx.TimeoutException:
             logger.warning("Telegram polling timeout")
+            await asyncio.sleep(1)
+        
+        except httpx.ReadTimeout as e:
+            logger.warning(f"Telegram polling read timeout : {e}")
             await asyncio.sleep(1)
 
         except HTTPError:
@@ -40,5 +38,4 @@ async def polling():
             await asyncio.sleep(2)
 
         except Exception:
-            logger.exception("Unexpected error in polling loop")
-            await asyncio.sleep(2)
+            logger.exception("Error while processing update", extra={"update_id": update.get("update_id")})
