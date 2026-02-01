@@ -14,7 +14,7 @@ class BotClient:
         
         await self._client.aclose()
 
-    async def sendMessage(self, chat_id: int, text: str, reply_message_id: int | None = None, reply_markup: dict | None = None):
+    async def sendMessage(self, chat_id: int, text: str, reply_message_id: int | None = None, reply_markup: dict | None = None, switch_inline_query_current_chat: str | None = None):
         payload = {
             "chat_id": chat_id,
             "text": text,
@@ -26,6 +26,8 @@ class BotClient:
             payload["reply_parameters"] = json.dumps({
                 "message_id": reply_message_id,
                 })
+        if switch_inline_query_current_chat:
+            payload["switch_inline_query_current_chat"] = switch_inline_query_current_chat
 
         r = await self._client.post(
             "/sendMessage",
