@@ -12,8 +12,8 @@ async def list_command(bot: BotClient, chat_id: str):
         text="choose the topic:",
         reply_markup={
             "inline_keyboard": [
-                [{"text": "users", "callback_data": "users_list"},
-                {"text": "assistants", "callback_data": "assistants_list"}],
+                [{"text": "users", "switch_inline_query_current_chat": "users_list"},
+                {"text": "assistants", "switch_inline_query_current_chat": "assistants_list"}],
             ]
         }
         )
@@ -25,7 +25,7 @@ async def new_chat_command(bot: BotClient, chat_id: str):
         reply_markup={
             "inline_keyboard": [
                 [{"text": "users", "callback_data": "new_user_chat"},
-                {"text": "assistants", "callback_data": "new_assistant_chat"}],
+                {"text": "assistants", "switch_inline_query_current_chat": "new_assistant_chat"}],
             ]
         }
         )
