@@ -2,6 +2,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import List
 
 class Settings(BaseSettings):
+    port: int
+    
     bot_token: str
     telegram_bot_link: str
 
