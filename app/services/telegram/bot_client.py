@@ -35,6 +35,17 @@ class BotClient:
         )
         r.raise_for_status()
         return r.json()
+    
+    async def answer_inline_query(self, inline_query_id: str, results: list):
+        r = await self._client.post(
+            "/answerInlineQuery",
+            data={
+                "inline_query_id": inline_query_id,
+                "results": json.dumps(results),
+            },
+        )
+        r.raise_for_status()
+        return r.json()
 
     async def getUpdates(self, offset: int = 0, timeout: int = 10) -> dict:
         r = await self._client.get(
