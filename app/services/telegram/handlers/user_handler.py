@@ -4,7 +4,7 @@ import httpx
 
 class UserHandler:
     def __init__(self, bot: BotClient):
-        self.base_url = "http://localhost:8000/api/v1/accounts"
+        self.base_url = "http://localhost:8000/api/v1/accounts/"
         self._client = httpx.AsyncClient(
             base_url=self.base_url,
             timeout=httpx.Timeout(15.0),
@@ -21,16 +21,23 @@ class UserHandler:
         ) 
 
         resp = await self._client.get(
-            f"/user/{user_create.user_id}",
+            f"user/{user_create.user_id}",
         )
 
         if resp.status_code == 200:
             user = resp.json()
         else:
             resp = await self._client.post(
-                "/user",
+                "user/",
                 json=user_create.model_dump(),
             )
+
+            if resp.status_code != 200:
+                await self.bot.sendMessage(
+                    chat_id=str(data["chat"]["id"]),
+                    text="Failed to create user. Please try again later."
+                )
+                return
             user = resp.json()
 
         return user
