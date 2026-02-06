@@ -1,10 +1,11 @@
 from ..bot_client import BotClient
 from app.schemas import UserCreate
+from app.core import settings
 import httpx
 
 class UserHandler:
     def __init__(self, bot: BotClient):
-        self.base_url = "http://localhost:8000/api/v1/accounts/"
+        self.base_url = f"http://localhost:{settings.port}/api/v1/accounts/"
         self._client = httpx.AsyncClient(
             base_url=self.base_url,
             timeout=httpx.Timeout(15.0),
@@ -38,6 +39,7 @@ class UserHandler:
                     text="Failed to create user. Please try again later."
                 )
                 return
+            
             user = resp.json()
 
         return user
