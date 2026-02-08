@@ -1,5 +1,6 @@
 from ..bot_client import BotClient
 from app.core import settings
+import uuid
 
 async def load_assistants(query: str, offset: int) -> list[dict]:
     models:list[str] = settings.ollama_models
@@ -10,15 +11,26 @@ async def load_assistants(query: str, offset: int) -> list[dict]:
 
     for model in models[start:end]:
         if model.startswith(query):
+            id = str(uuid.uuid4())
             result.append({
                 "type": "article",
-                "id": model,
+                "id": id,
                 "title": model,
                 "description": model,
                 "input_message_content": {
                     "message_text": model,
                 },
             })
+    if not result:
+        result.append({
+            "type": "article",
+            "id": str(uuid.uuid4()),
+            "title": "None",
+            "description": "None",
+            "input_message_content": {
+                    "message_text": "None",
+                },
+        })
 
     return result
 
