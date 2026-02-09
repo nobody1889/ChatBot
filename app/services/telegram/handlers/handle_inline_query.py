@@ -38,14 +38,17 @@ async def load_users(offset: int) -> list[dict]:
     pass
 
 async def handle_inline_query(bot: BotClient, inline_query: dict) -> None:
-    query: str = inline_query["query"].split(": ")[-1]
+    query: str = inline_query["query"]
     offset = int(inline_query.get("offset") or 1)
 
     if "assistant" in query.split("_"):
-        result = await load_assistants(query=query, offset=offset)
-    if "user" in query.split("_"):
+        result = await load_assistants(query=query.split(": ")[-1], offset=offset)
+    elif "user" in query.split("_"):
         result = await load_users(offset)
-
+    else:
+        await bot.sendMessage(chat_id=inline_query["id"], text="i don't handle this!!!!!")
+        return
+    
     await bot.answer_inline_query(inline_query["id"], result)
 
     
