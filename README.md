@@ -1,41 +1,49 @@
-# ChatBot
-A Telegram bot powered by AI (Ollama) for intelligent conversations.  
-Quick to deploy with Docker and customizable with different AI models.
+# 📬 ChatBot — AI-Powered Telegram Bot
+
+A Telegram bot powered by **AI (Ollama)** for smart conversations.  
+Lightweight, async, Docker-ready, and easily customizable with different AI models.
 
 ---
 
-## Tech Stack
-- **Language:** Python(FastApi)
-- **Bot Implementation:** Raw Telegram API via `async` HTTP requests (`httpx`)
-- **AI Model:** Ollama (gemma3)
-- **Containerization:** Docker & Docker Compose
-- **Database:** PostgreSQL with SQLAlchemy (async)
-- **Other:** Async programming with Python `asyncio`
+## 🚀 Features
+
+- 💬 Intelligent replies using Ollama AI models
+- 🧠 Context-aware conversation handling
+- ⚡ Fully asynchronous (FastAPI + async httpx + asyncio)
+- 🐳 Easy deployment with Docker & Docker Compose
+- 🗃 Persistent message storage via PostgreSQL + SQLAlchemy (async)
+- 🧠 Support for different AI models (including faster/lighter variants)
 
 ---
 
-## Features
-- AI-powered Telegram conversations with contextual understanding
-- Supports Ollama AI models (gemma3)
-- Lightweight and minimal setup required
-- Quick deployment using Docker
-- Optional smaller/faster AI model variant for low-resource environments
-- Fully asynchronous for better performance
-- Persistent conversation storage using PostgreSQL
+## 🧱 Tech Stack
+
+| Component | Technology |
+|-----------|------------|
+| Language | Python (FastAPI) |
+| Telegram Bot | Telegram Bot API (async HTTP via httpx) |
+| AI Backend | Ollama |
+| Database | PostgreSQL |
+| ORM | SQLAlchemy (async) |
+| Deployment | Docker & Docker Compose |
 
 ---
 
+## 📦 Prerequisites
 
-## Quick Start
+Before starting, make sure you have:
 
-```bash
-# 1. Build & start everything
-docker compose up -d --build
+- Docker & Docker Compose installed
+- A Telegram bot token (from @BotFather)
+- Enough resources to run the Ollama AI container
 
-# 2. Pull your AI model (only once)
-docker exec -it ollama ollama pull gemma3
-# Optional: smaller/faster variant
-# docker exec -it ollama ollama pull gemma3:4b-it-q4_K_M
+---
 
-# 3. Test your Telegram bot
-# Open Telegram and send a message to your bot; it should respond using the AI model.
+## ⚙️ Configuration
+
+Rename `.env.example` ➝ `.env` and set the following:
+
+```env
+TELEGRAM_TOKEN=your_telegram_bot_token
+DATABASE_URL=postgresql+asyncpg://user:pass@postgres/dbname
+OLLAMA_URL=http://ollama:11434
