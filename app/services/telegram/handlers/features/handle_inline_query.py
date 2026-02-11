@@ -59,8 +59,3 @@ async def handle_inline_query(bot: BotClient, inline_query: dict) -> None:
         result = await load_unknown()
     
     await bot.answer_inline_query(inline_query["id"], result)
-
-    
-
-async def handle_chosen_inline_result(bot: BotClient, chosen_inline_result: dict) -> None:
-    print(f"Received chosen inline result: {chosen_inline_result}")
