@@ -13,8 +13,10 @@ async def list_command(bot: BotClient, chat_id: str):
         text="choose the topic:",
         reply_markup={
             "inline_keyboard": [
-                [{"text": "users", "switch_inline_query_current_chat": "users_list: "},
-                {"text": "assistants", "switch_inline_query_current_chat": "assistants_list: "}],
+                [
+                # {"text": "users", "switch_inline_query_current_chat": "users_list: "},
+                {"text": "assistants", "switch_inline_query_current_chat": "assistants_list: "}
+                ],
             ]
         }
         )
@@ -25,8 +27,10 @@ async def new_chat_command(bot: BotClient, chat_id: str):
         text="choose the topic:",
         reply_markup={
             "inline_keyboard": [
-                [{"text": "users", "callback_data": "new_user_chat: "},
-                {"text": "assistants", "switch_inline_query_current_chat": "new_assistant_chat: "}],
+                [
+                # {"text": "users", "callback_data": "new_user_chat: "},
+                {"text": "assistants", "switch_inline_query_current_chat": "new_assistant_chat: "}
+                ],
             ]
         }
         )
@@ -34,7 +38,7 @@ async def new_chat_command(bot: BotClient, chat_id: str):
 async def select_assistant_command(bot: BotClient, chat_id: str, assistant_name: str):
     assistant = AssistantHandler(bot=bot)
     resp = await assistant.set_or_add_assistant(user_id=chat_id, assistant_name=assistant_name)
-    
+
     if resp:
         await bot.sendMessage(chat_id, f"Assistant {assistant_name} selected.")
     else:
