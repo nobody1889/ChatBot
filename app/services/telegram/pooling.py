@@ -2,7 +2,7 @@ import asyncio
 import httpx
 from httpx import HTTPError
 from .bot_client import BotClient
-from .handlers.handle_updates import dispatcher
+from .handlers import dispatcher
 from app.core import logging
 
 logger = logging.getLogger(__name__)
