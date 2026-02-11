@@ -24,7 +24,7 @@ class BotClient:
             payload["reply_markup"] = json.dumps(reply_markup)
         if reply_message_id:
             payload["reply_parameters"] = json.dumps({
-                "message_id": reply_message_id,
+                "reply_to_message_id": reply_message_id,
                 })
         if switch_inline_query_current_chat:
             payload["switch_inline_query_current_chat"] = switch_inline_query_current_chat
@@ -36,12 +36,15 @@ class BotClient:
         r.raise_for_status()
         return r.json()
     
-    async def answer_inline_query(self, inline_query_id: str, results: list):
+    async def answer_inline_query(self, inline_query_id: str, results: list, cache_time: int = 0, is_personal: bool = True, next_offset: str = "") -> dict:
         r = await self._client.post(
             "/answerInlineQuery",
             data={
                 "inline_query_id": inline_query_id,
                 "results": json.dumps(results),
+                "cache_time": cache_time,
+                "is_personal": is_personal,
+                "next_offset": next_offset,
             },
         )
         r.raise_for_status()
