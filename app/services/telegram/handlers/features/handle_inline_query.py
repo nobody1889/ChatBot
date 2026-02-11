@@ -38,6 +38,18 @@ async def load_my_assistants(user_id: str, offset: int) -> list[dict]:
     assistants = await AssistantHandler().get_user_assistants(user_id=user_id)
     result = []
 
+    if not assistants:
+        result.append({
+            "type": "article",
+            "id": str(uuid.uuid4()),
+            "title": "No Assistants Found",
+            "description": "No Assistants Found",
+            "input_message_content": {
+                    "message_text": "NO MODEL",
+                },
+        })
+        return result
+    
     for assistant in assistants:
         result.append({
             "type": "article",
@@ -48,6 +60,7 @@ async def load_my_assistants(user_id: str, offset: int) -> list[dict]:
                     "message_text": "/select_assistant " + assistant["name"],
                 },
         })
+
     if not result:
         result.append({
             "type": "article",
