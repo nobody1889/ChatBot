@@ -24,7 +24,7 @@ class BotClient:
             payload["reply_markup"] = json.dumps(reply_markup)
         if reply_message_id:
             payload["reply_parameters"] = json.dumps({
-                "reply_to_message_id": reply_message_id,
+                "message_id": reply_message_id,
                 })
         if switch_inline_query_current_chat:
             payload["switch_inline_query_current_chat"] = switch_inline_query_current_chat
