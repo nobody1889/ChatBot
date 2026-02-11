@@ -1,8 +1,8 @@
-from .handle_commands import command_handler
-from .handle_ai import handle_ai_message
-from .user_handler import UserHandler
-from .handle_callback_query import handle_callback_query
-from .handle_inline_query import handle_inline_query, handle_chosen_inline_result
+from ..handle_commands import command_handler
+from ..chat.ai_response import handle_ai_message
+from ..user_handler import UserHandler
+from ..handle_callback_query import handle_callback_query
+from ..handle_inline_query import handle_inline_query, handle_chosen_inline_result
 
 async def handle_user(bot, data: dict) -> dict | None:
     chat_id = str(data["chat"]["id"])
