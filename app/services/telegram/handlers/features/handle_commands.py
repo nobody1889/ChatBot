@@ -1,5 +1,5 @@
-from app.services.telegram.bot_client import BotClient
-from app.services.telegram.handlers.user_handler import AssistantHandler
+from app.services.telegram.handlers.bot_client import BotClient
+from app.services.telegram.handlers.gateways import AssistantHandler
 
 async def start_command(bot: BotClient, chat_id: str):
     await bot.sendMessage(chat_id, "Welcome to the chatbot 👋")

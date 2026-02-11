@@ -1,7 +1,7 @@
 import asyncio
 import httpx
 from httpx import HTTPError
-from .bot_client import BotClient
+from .handlers.bot_client import BotClient
 from .handlers import dispatcher
 from app.core import logging
 

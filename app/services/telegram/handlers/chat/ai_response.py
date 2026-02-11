@@ -1,6 +1,6 @@
 from app.services.assistant import AssistantClient as AiClient
 from app.core.logging import logging
-from app.services.telegram.bot_client import BotClient
+from app.services.telegram.handlers.bot_client import BotClient
 
 logger = logging.getLogger(__name__)
 

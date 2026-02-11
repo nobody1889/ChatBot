@@ -1,6 +1,6 @@
 from app.services.telegram.handlers.features.handle_commands import command_handler
-from ..chat.ai_response import handle_ai_message
-from ..user_handler import UserHandler
+from app.services.telegram.handlers.chat.ai_response import handle_ai_message
+from app.services.telegram.handlers.gateways import UserHandler
 from app.services.telegram.handlers.features.handle_callback_query import handle_callback_query
 from app.services.telegram.handlers.features.handle_inline_query import handle_inline_query, handle_chosen_inline_result
 
