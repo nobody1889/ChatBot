@@ -36,6 +36,7 @@ Before starting, make sure you have:
 - Docker & Docker Compose installed
 - A Telegram bot token (from @BotFather)
 - Enough resources to run the Ollama AI container
+- Download the models you want for ollama
 
 ---
 
@@ -47,3 +48,4 @@ Rename `.env.example` ➝ `.env` and set the following:
 TELEGRAM_TOKEN=your_telegram_bot_token
 DATABASE_URL=postgresql+asyncpg://user:pass@postgres/dbname
 OLLAMA_URL=http://ollama:11434
+OLLAMA_MODELS=["the model you downloaded"] (you can see waht models you have via `ollama list` in terminal)
