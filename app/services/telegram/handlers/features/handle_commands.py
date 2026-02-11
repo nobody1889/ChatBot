@@ -35,7 +35,7 @@ async def new_chat_command(bot: BotClient, chat_id: str):
         }
         )
 
-async def select_assistant_command(bot: BotClient, chat_id: str, assistant_name: str):
+async def new_assistant_command(bot: BotClient, chat_id: str, assistant_name: str):
     assistant = AssistantHandler()
     resp = await assistant.set_or_add_assistant(user_id=chat_id, assistant_name=assistant_name)
 
@@ -43,6 +43,12 @@ async def select_assistant_command(bot: BotClient, chat_id: str, assistant_name:
         await bot.sendMessage(chat_id, f"Assistant {assistant_name} selected.")
     else:
         await bot.sendMessage(chat_id, f"Failed to select assistant {assistant_name}. Please try again later.")
+
+async def select_assistant_command(bot: BotClient, chat_id: str, assistant_name: str):
+    pass
+
+async def new_user_chat_command(bot: BotClient, chat_id: str):
+    pass
 
 async def select_user_command(bot: BotClient, chat_id: str, user_name: str):
     pass
@@ -59,6 +65,11 @@ SELECT_COMMANDS = {
     "/select_user": select_user_command,
 }
 
+NEW_COMMAND = {
+    "/new_assistant_chat": new_assistant_command,
+    "/new_user_chat": new_user_chat_command,
+}
+
 async def command_handler(bot, chat_id: str, text: str):
     cmd = text.split()[0]
 
@@ -67,6 +78,9 @@ async def command_handler(bot, chat_id: str, text: str):
 
     elif cmd in SELECT_COMMANDS and len(text.split(" ")) > 1:
         await SELECT_COMMANDS[cmd](bot, chat_id, text.split()[1])
+    
+    elif cmd in NEW_COMMAND and len(text.split(" ")) > 1:
+        await NEW_COMMAND[cmd](bot, chat_id, text.split()[1])
 
     else:
         await bot.sendMessage(chat_id, "Unknown command.")
