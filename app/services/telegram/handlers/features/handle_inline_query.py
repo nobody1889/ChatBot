@@ -1,4 +1,4 @@
-from ..bot_client import BotClient
+from app.services.telegram.bot_client import BotClient
 from app.core import settings
 import uuid
 
