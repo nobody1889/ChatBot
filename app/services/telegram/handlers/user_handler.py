@@ -84,6 +84,20 @@ class AssistantHandler:
             text=f"Failed to select assistant {assistant_name}. Please try again later."
         )
         return
+    
+    async def get_user_assistants(self, user_id: str) -> list[dict] | None:
+        resp = await self._client.get(
+            f"user/{user_id}",
+        )
+
+        if resp.status_code == 200:
+            return resp.json()
+        
+        await self.bot.sendMessage(
+            chat_id=user_id,
+            text=f"Failed to retrieve assistants. Please try again later."
+        )
+        return
 
     async def close(self):
         await self._client.aclose()
