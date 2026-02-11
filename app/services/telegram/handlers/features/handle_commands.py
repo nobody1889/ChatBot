@@ -36,7 +36,7 @@ async def new_chat_command(bot: BotClient, chat_id: str):
         )
 
 async def select_assistant_command(bot: BotClient, chat_id: str, assistant_name: str):
-    assistant = AssistantHandler(bot=bot)
+    assistant = AssistantHandler()
     resp = await assistant.set_or_add_assistant(user_id=chat_id, assistant_name=assistant_name)
 
     if resp:

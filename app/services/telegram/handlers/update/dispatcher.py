@@ -7,7 +7,7 @@ from app.services.telegram.handlers.features.handle_inline_query import handle_i
 async def handle_user(bot, data: dict) -> dict | None:
     chat_id = str(data["chat"]["id"])
 
-    handler = UserHandler(bot=bot)
+    handler = UserHandler()
     user: dict = await handler.get_or_create_user(data = data)
 
     if user.get("is_blocked"):
