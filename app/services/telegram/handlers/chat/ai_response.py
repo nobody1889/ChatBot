@@ -6,8 +6,8 @@ logger = logging.getLogger(__name__)
 
 async def handle_ai_message(bot: BotClient, user: dict, message: str, message_id: int) -> None:
     chat_id = user.get("user_id")
-    assistants: list = user.get("asstants")
-
+    assistants: list = user.get("assistants")
+    
     if not assistants:
         await bot.sendMessage(
             chat_id=chat_id,
