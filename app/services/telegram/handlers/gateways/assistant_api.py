@@ -33,6 +33,15 @@ class AssistantHandler:
                 return resp.json()
         else:
             return
+        
+    async def set_default_assistant(self, user_id: str, assistant_name: str) -> dict | None:
+        resp = await self._client.put(
+            f"user/{user_id}/model/{assistant_name}",
+        )
+        if resp.status_code == 200:
+            return resp.json()
+        else:
+            return
     
     async def get_user_assistants(self, user_id: str) -> list[dict] | None:
         resp = await self._client.get(
