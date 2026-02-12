@@ -7,15 +7,15 @@ async def start_command(bot: BotClient, chat_id: str):
 async def help_command(bot: BotClient, chat_id: str):
     await bot.sendMessage(chat_id, "I'm an AI bot 🤖. Tell me what you need!")
     
-async def list_command(bot: BotClient, chat_id: str):
+async def my_list_command(bot: BotClient, chat_id: str):
     await bot.sendMessage(
         chat_id=chat_id,
         text="choose the topic:",
         reply_markup={
             "inline_keyboard": [
                 [
-                # {"text": "users", "switch_inline_query_current_chat": "users_list: "},
-                {"text": "assistants", "switch_inline_query_current_chat": "assistants_list: "}
+                # {"text": "users", "switch_inline_query_current_chat": "my_users_list: "},
+                {"text": "assistants", "switch_inline_query_current_chat": "my_assistants_list: "}
                 ],
             ]
         }
@@ -56,7 +56,7 @@ async def select_user_command(bot: BotClient, chat_id: str, user_name: str):
 TELEGRAM_COMMANDS = {
     "/start": start_command,
     "/help": help_command,
-    "/mylist": list_command,
+    "/mylist": my_list_command,
     "/new_chat": new_chat_command,
 }
 

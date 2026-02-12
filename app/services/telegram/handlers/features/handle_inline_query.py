@@ -18,7 +18,7 @@ async def load_assistants(query: str, offset: int) -> list[dict]:
                 "title": model,
                 "description": model,
                 "input_message_content": {
-                    "message_text": "/select_assistant " + model,
+                    "message_text": "/new_assistant_chat " + model,
                 },
             })
     if not result:
@@ -92,10 +92,10 @@ async def load_unknown() -> list[dict]:
     }]
 
 LOADERS = {
-    "new_assistant": lambda user_id, offset, q: load_assistants(query=q.split(":")[-1].strip(), offset=offset),
-    "assistants_list": lambda user_id, offset, q: load_my_assistants(user_id=user_id, offset=offset),
-    "new_user": lambda user_id, offset, q: load_users(offset),
-    "users_list": lambda user_id, offset, q: load_my_users(offset),
+    "new_assistant_chat": lambda user_id, offset, q: load_assistants(query=q.split(":")[-1].strip(), offset=offset),
+    "my_assistants_list": lambda user_id, offset, q: load_my_assistants(user_id=user_id, offset=offset),
+    "new_user_chat": lambda user_id, offset, q: load_users(offset),
+    "my_users_list": lambda user_id, offset, q: load_my_users(offset),
 }
 
 async def handle_inline_query(bot: BotClient, inline_query: dict) -> None:
