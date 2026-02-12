@@ -45,7 +45,13 @@ async def new_assistant_command(bot: BotClient, chat_id: str, assistant_name: st
         await bot.sendMessage(chat_id, f"Failed to select assistant {assistant_name}. Please try again later.")
 
 async def select_assistant_command(bot: BotClient, chat_id: str, assistant_name: str):
-    pass
+    assistant = AssistantHandler()
+    resp = await assistant.set_default_assistant(user_id=chat_id, assistant_name=assistant_name)
+
+    if resp:
+        await bot.sendMessage(chat_id, f"Assistant {assistant_name} selected.")
+    else:
+        await bot.sendMessage(chat_id, f"Failed to select assistant {assistant_name}. Please try again later.")
 
 async def new_user_chat_command(bot: BotClient, chat_id: str):
     pass
