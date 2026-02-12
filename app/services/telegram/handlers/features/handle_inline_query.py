@@ -54,10 +54,10 @@ async def load_my_assistants(user_id: str, offset: int) -> list[dict]:
         result.append({
             "type": "article",
             "id": str(uuid.uuid4()),
-            "title": assistant["name"],
-            "description": assistant["name"],
+            "title": assistant["model"],
+            "description": assistant["model"],
             "input_message_content": {
-                    "message_text": "/select_assistant " + assistant["name"],
+                    "message_text": "/select_assistant " + assistant["model"],
                 },
         })
 
