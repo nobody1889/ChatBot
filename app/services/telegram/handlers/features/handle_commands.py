@@ -79,7 +79,7 @@ async def command_handler(bot, chat_id: str, text: str):
     elif cmd in SELECT_COMMANDS and len(text.split(" ")) > 1:
         await SELECT_COMMANDS[cmd](bot, chat_id, text.split()[1])
     
-    elif cmd in NEW_COMMAND and len(text.split(" ")) > 1:
+    elif cmd in NEW_COMMAND:
         await NEW_COMMAND[cmd](bot, chat_id, text.split()[1])
 
     else:
