@@ -13,24 +13,26 @@ class AssistantHandler:
         resp = await self._client.get( # check if assistant exists
             f"user/{user_id}/model/{assistant_name}",
         )
-
+        
         if resp.status_code == 200: # set default assistant
             resp = await self._client.put(
                 f"user/{user_id}/model/{assistant_name}",
             )
             return resp.json()
         
-        elif resp.status_code == 404:
+        elif resp.status_code == 404: # add new assistant
             resp = await self._client.post(
+                url="",
                 json={
                     "model": assistant_name,
                     "user_id": user_id
                     },
             )
-
+            
             if resp.status_code == 200:
                 return resp.json()
-        return
+        else:
+            return
     
     async def get_user_assistants(self, user_id: str) -> list[dict] | None:
         resp = await self._client.get(
