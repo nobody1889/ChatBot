@@ -3,7 +3,7 @@ from app.core import settings
 
 class AssistantHandler:
     def __init__(self):
-        self.base_url = f"http://localhost:{settings.port}/api/v1/assistant/"
+        self.base_url = f"http://localhost:{settings.port}/api/v1/accounts/assistant/"
         self._client = httpx.AsyncClient(
             base_url=self.base_url,
             timeout=httpx.Timeout(15.0),
