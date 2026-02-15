@@ -20,9 +20,9 @@ class UserUpdate(BaseModel):
 class UserRead(BaseModel):
     id: int
     user_id: str
-    first_name: str
-    last_name: str
-    username: str
+    first_name: str | None
+    last_name: str | None
+    username: str | None
 
     assistants: List[AssistantRead] = []
 
